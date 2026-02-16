@@ -5,7 +5,7 @@ VIDEOSEG equ 0b800h
 
 Start:	mov ax, VIDEOSEG
 	mov es, ax
-	mov bx, 0
+	mov bx, 7C6h
 	
 	mov al, '*'
 	mov ah, 4eh
