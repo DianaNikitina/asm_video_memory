@@ -3,71 +3,71 @@
 org 100h
 VIDEOSEG equ 0b800h
 
-Start:  call Main
-        call Exit
+Start:                  call Main
+                        call Exit
 
 ;==================================
-Main    proc
+Main                    proc
 
-        call Print_str
-        call Do_frame
-        
-        ret
-        endp
-
-;==================================
-Print_str   proc
-
-            mov ax, VIDEOSEG
-            mov es, ax
-
-            mov bx, 7C6h
-
-            mov cl, ds: [80h]
-		    sub cl, 1
-		    xor ch, ch
-
-            mov si, 82h
-            mov ah, 0DBh
-
-Put_str:    mov al, ds: [si]
-            inc si
-
-            mov es: [bx], ax
-            add bx, 2
-            LOOP Put_str
-
-            mov [SavedBX], bx
-
-            ret
-            endp
+                        call Print_str
+                        call Do_frame
+                        
+                        ret
+                        endp       
 
 ;==================================
-Do_frame    proc
+Print_str               proc
 
-            mov al, 03h
-	        mov ah, 8Bh
+                        mov ax, VIDEOSEG
+                        mov es, ax
 
-            mov bx, 680h
-            call Put_cl_horizontall
-            call Put_heart_horizontall
+                        mov bx, 7C6h
 
-            mov bx, 900h
-            call Put_cl_horizontall
-            call Put_heart_horizontall
+                        mov cl, ds: [80h]
+                        sub cl, 1
+                        xor ch, ch
 
-            mov bx, 720h
-            call Put_cl_verticall
-            call Put_heart_verticall
+                        mov si, 82h
+                        mov ah, 0DBh
 
-            mov bx, [SavedBX]
-            add bx, 4
-            sub bx, 160
-            call Put_cl_verticall
-            call Put_heart_verticall
+Put_str:                mov al, ds: [si]
+                        inc si
 
-            ret
-            endp
+                        mov es: [bx], ax
+                        add bx, 2
+                        LOOP Put_str
+
+                        mov [SavedBX], bx
+
+                        ret
+                        endp
+
+;==================================
+Do_frame                proc
+
+                        mov al, 03h
+                        mov ah, 8Bh
+
+                        mov bx, 680h
+                        call Put_cl_horizontall
+                        call Put_heart_horizontall
+
+                        mov bx, 900h
+                        call Put_cl_horizontall
+                        call Put_heart_horizontall
+
+                        mov bx, 720h
+                        call Put_cl_verticall
+                        call Put_heart_verticall
+
+                        mov bx, [SavedBX]
+                        add bx, 4
+                        sub bx, 160
+                        call Put_cl_verticall
+                        call Put_heart_verticall
+
+                        ret
+                        endp
 
 ;==================================
 Put_heart_horizontall   proc
